@@ -34,20 +34,31 @@
     <div id="modal" class="modal hidden">
         <div class="modal-content">
             <h3>Configurar Alarma</h3>
-            <label for="hora-input">Hora:</label>
+            
+            <!-- Input para hora exacta -->
+            <label for="hora-input">Hora Exacta:</label>
             <input type="time" id="hora-input">
+            
+            <!-- Input para cuenta atrás -->
+            <label for="tiempo-input">Cuenta Atrás (hh:mm:ss):</label>
+            <input type="text" id="tiempo-input" placeholder="00:00:00">
+            
+            <!-- Título y sonido -->
             <label for="titulo-input">Título:</label>
             <input type="text" id="titulo-input" placeholder="Título de la alarma">
             <label for="sonido-input">Sonido:</label>
             <select id="sonido-input">
-                <option value="alarma.mp3">Sonido 1</option>
-                <option value="sonido2.mp3">Sonido 2</option>
-                <option value="sonido3.mp3">Sonido 3</option>
+                <option value="darius.mp3">Sonido 1</option>
+                <option value="chinese.mp3">Sonido 2</option>
+                <option value="puestada.mp3">Sonido 3</option>
             </select>
+
+            <!-- Botones -->
             <button id="guardar-alarma" class="boton">Guardar</button>
             <button id="cancelar" class="boton-rojo">Cancelar</button>
         </div>
     </div>
+
 
     <script src="scripts/reloj.js"></script>
     <script src="scripts/alarma.js"></script>
