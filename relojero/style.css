@@ -1,5 +1,6 @@
 @import url('https://fonts.cdnfonts.com/css/ds-digital');
 
+/* ----- Estilos globales ----- */
 body {
     margin: 0;
     font-family: 'DS-Digital', sans-serif;
@@ -36,12 +37,58 @@ body.light-theme .modal-content {
     color: #000000;
 }
 
-
+/* ----- Alarma ----- */
 .alarma {
     margin-top: 20px;
 }
 
-/* Modal */
+/* ----- Botones ----- */
+#habilitar {
+    background-color: orange;
+    color: white;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#habilitar:hover {
+    background-color: #e67e22;
+}
+
+#desactivar {
+    background-color: red;
+    color: white;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#desactivar:hover {
+    background-color: #e74c3c;
+}
+
+#guardar-alarma, #cancelar {
+    background-color: orange;
+    color: white;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#guardar-alarma:hover, #cancelar:hover {
+    background-color: #e67e22;
+}
+
+/* ----- Modal Principal ----- */
 .modal {
     position: fixed;
     top: 0;
@@ -55,76 +102,85 @@ body.light-theme .modal-content {
 }
 
 .modal-content {
-    background: #111;
-    padding: 20px;
+    background: #333; /* Fondo oscuro neutro */
+    padding: 30px;
     border-radius: 10px;
     color: #fff;
     text-align: left;
+    width: 400px; /* Ancho fijo */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra sutil */
+    font-family: 'Arial', sans-serif; /* Fuente neutral */
 }
 
-.hidden {
-    display: none;
+.modal-header {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: #e67e22;
 }
 
-#habilitar {
-    background-color: orange; /* Color de fondo naranja */
-    color: white; /* Texto en blanco */
-    font-size: 0.9rem; /* Tamaño de fuente más pequeño */
-    padding: 8px 16px; /* Relleno alrededor del texto */
-    border: none; /* Sin bordes */
-    border-radius: 4px; /* Bordes redondeados */
-    cursor: pointer; /* Indicador de mano para interactividad */
-    transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+/* Estructura de las entradas */
+.modal-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px; /* Espacio entre filas */
 }
 
-/* Efecto al pasar el ratón sobre el botón */
-#habilitar:hover {
-    background-color: #e67e22; /* Color más oscuro al pasar el ratón */
+.modal-label {
+    font-size: 1rem;
+    color: #ddd;
+    margin-right: 10px;
+    flex: 1;
 }
 
-#desactivar {
-    background-color: red; /* Color de fondo rojo */
-    color: white; /* Texto en blanco */
-    font-size: 0.9rem; /* Tamaño de fuente más pequeño */
-    padding: 8px 16px; /* Relleno alrededor del texto */
-    border: none; /* Sin bordes */
-    border-radius: 4px; /* Bordes redondeados */
-    cursor: pointer; /* Indicador de mano para interactividad */
-    transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+.modal-input, .modal-select {
+    flex: 2;
+    padding: 8px;
+    border: 1px solid #555;
+    background-color: #222;
+    color: #fff;
+    border-radius: 5px;
+    transition: border 0.3s ease;
 }
 
-/* Efecto al pasar el ratón sobre el botón desactivar */
-#desactivar:hover {
-    background-color: #e74c3c; /* Color más oscuro al pasar el ratón */
+.modal-input:focus, .modal-select:focus {
+    border-color: #e67e22;
+    outline: none;
 }
 
-#guardar-alarma {
-    background-color: orange; /* Color de fondo naranja */
-    color: white; /* Texto en blanco */
-    font-size: 0.9rem; /* Tamaño de fuente más pequeño */
-    padding: 8px 16px; /* Relleno alrededor del texto */
-    border: none; /* Sin bordes */
-    border-radius: 4px; /* Bordes redondeados */
-    cursor: pointer; /* Indicador de mano para interactividad */
-    transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+/* Botones del modal */
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
 }
 
-/* Efecto al pasar el ratón sobre el botón */
-#guardar-alarma:hover {
-    background-color: #e67e22; /* Color más oscuro al pasar el ratón */
-}
-
-#cancelar {
-    background-color: orange;
+.btn {
+    background-color: #e67e22;
     color: white;
-    font-size: 0.9rem;
-    padding: 8px 16px;
+    padding: 10px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
+    font-size: 1rem;
     transition: background-color 0.3s ease;
 }
 
-#cancelar:hover {
-    background-color: #e67e22;
+.btn:hover {
+    background-color: #d35400;
+}
+
+.btn-cancel {
+    background-color: #555;
+}
+
+.btn-cancel:hover {
+    background-color: #444;
+}
+
+/* ----- Otros elementos ocultos ----- */
+.hidden {
+    display: none;
 }

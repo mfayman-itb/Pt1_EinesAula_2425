@@ -1,42 +1,63 @@
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   margin: 0;
-  background-color: #f0f0f0;
-  font-family: Arial, sans-serif;
-  flex-direction: column; /* Aseguramos que los elementos estén apilados verticalmente */
+  font-family: 'DS-Digital', sans-serif;
+  background-color: #000;
+  color: #ff8800;
+  text-align: center;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .container {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin-top: 0; /* Reducir el margen superior */
 }
 
-canvas {
-  border: 2px solid #333;
-  border-radius: 50%;
-  margin-bottom: 20px;
-  display: block; /* Aseguramos que el canvas esté centrado */
+h1 {
+  font-size: 3rem; /* Reducir el tamaño del título */
+  margin-bottom: 10px; /* Reducir el espacio entre el título y el botón */
 }
 
-button {
-  background-color: #007BFF;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 18px;
-  border-radius: 5px;
-  cursor: pointer;
+body.light-theme {
+  background-color: #ffffff;
+  color: #333333;
 }
 
-button:hover {
-  background-color: #0056b3;
+body.light-theme .theme-button {
+  color: #333333;
 }
 
+body.light-theme .modal-content {
+  background: #f4f4f4;
+  color: #000000;
+}
+
+/* Estilo para la ruleta */
+#wheel {
+  margin-bottom: 20px; /* Ajustar espacio entre la ruleta y el resultado */
+}
+
+/* Contenedor de ganador */
 #winner {
-  margin-top: 20px;
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
+  font-size: 2rem;
+  color: #fff;
+  margin-top: 20px; /* Añadir espacio entre el resultado y la ruleta */
+}
+
+/* Tema Claro */
+body.light-theme {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+body.light-theme .theme-button {
+  color: #333333;
+}
+
+body.light-theme .modal-content {
+  background: #f4f4f4;
+  color: #000000;
 }

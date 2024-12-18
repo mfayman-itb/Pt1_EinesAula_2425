@@ -1,118 +1,140 @@
-let horaAlarma, sonidoAlarma, tituloAlarma, cuentaAtrasInterval;
+let horaAlarma, sonidoAlarma, tituloAlarma, tiempoRestanteMs, cuentaAtrasInterval;
 
 const modal = document.getElementById('modal');
+const modalAlarma = document.getElementById('modal-alarma'); // Nuevo modal al sonar
 const horaAlarmaElemento = document.getElementById('hora-alarma');
 const cuentaAtrasElemento = document.getElementById('cuenta-atras');
+const tituloAlarmaElemento = document.getElementById('alarma-titulo');
 const alarmaInfo = document.getElementById('alarma-info');
 const habilitarBoton = document.getElementById('habilitar');
 const desactivarBoton = document.getElementById('desactivar');
-const cancelarBoton = document.getElementById('cancelar');
-
-// Nuevo input para la cuenta atrás
 const tiempoInput = document.getElementById('tiempo-input');
+const horaInput = document.getElementById('hora-input');
 
+// **VALIDAR OPCIONES MUTUAS**
+horaInput.addEventListener('input', () => {
+    if (horaInput.value) tiempoInput.disabled = true; // Desactiva cuenta atrás
+    else tiempoInput.disabled = false;
+});
+
+tiempoInput.addEventListener('input', () => {
+    if (tiempoInput.value) horaInput.disabled = true; // Desactiva hora exacta
+    else horaInput.disabled = false;
+});
+
+// ABRIR MODAL
 document.getElementById('habilitar').addEventListener('click', () => {
     modal.classList.remove('hidden');
 });
 
+// BOTÓN CANCELAR
+document.getElementById('cancelar').addEventListener('click', () => {
+    modal.classList.add('hidden');
+});
+
+// GUARDAR ALARMA
 document.getElementById('guardar-alarma').addEventListener('click', () => {
-    // Obtener valores del modal
-    const horaInput = document.getElementById('hora-input').value;
-    const tiempoCuentaAtras = tiempoInput.value;
     sonidoAlarma = document.getElementById('sonido-input').value;
     tituloAlarma = document.getElementById('titulo-input').value;
 
-    if (!horaInput && !tiempoCuentaAtras) {
+    // VALIDACIÓN
+    if (!horaInput.value && !tiempoInput.value) {
         alert('Por favor, selecciona una hora o configura la cuenta atrás.');
         return;
     }
 
-    // Configuración basada en cuenta atrás
-    if (tiempoCuentaAtras) {
-        const [hh, mm, ss] = tiempoCuentaAtras.split(':').map(Number);
-        const ahora = new Date();
-        const tiempoRestanteMs = (hh * 3600 + mm * 60 + ss) * 1000;
-
-        // Calcular la hora exacta sumando la cuenta atrás
-        const horaAlarmaExacta = new Date(ahora.getTime() + tiempoRestanteMs);
-        horaAlarma = horaAlarmaExacta.toTimeString().slice(0, 5);
+    // CONFIGURAR CUENTA ATRÁS
+    if (tiempoInput.value) {
+        const [hh, mm, ss] = tiempoInput.value.split(':').map(Number);
+        tiempoRestanteMs = (hh * 3600 + mm * 60 + ss) * 1000;
+        iniciarCuentaAtras();
     } else {
-        // Configuración basada en hora exacta
-        horaAlarma = horaInput;
+        horaAlarma = horaInput.value;
+        calcularCuentaAtrasDesdeHora();
     }
 
-    // Mostrar información de la alarma
-    horaAlarmaElemento.textContent = horaAlarma;
-    document.querySelector('.alarma h2').textContent = tituloAlarma || 'Alarma';
+    tituloAlarmaElemento.textContent = tituloAlarma || 'Alarma';
     alarmaInfo.classList.remove('hidden');
-
     habilitarBoton.classList.add('hidden');
     desactivarBoton.classList.remove('hidden');
-
-    // Cerrar modal
     modal.classList.add('hidden');
-
-    // Iniciar cuenta atrás
-    iniciarCuentaAtras();
 });
 
+// INICIAR CUENTA ATRÁS
 function iniciarCuentaAtras() {
-    if (cuentaAtrasInterval) clearInterval(cuentaAtrasInterval);
-
-    const [hora, minuto] = horaAlarma.split(':');
-    const alarmaTime = new Date();
-    alarmaTime.setHours(hora, minuto, 0, 0);
+    const tiempoFinal = Date.now() + tiempoRestanteMs;
 
     cuentaAtrasInterval = setInterval(() => {
-        const ahora = new Date();
-        const tiempoRestante = alarmaTime - ahora;
+        const tiempoActual = Date.now();
+        const diferencia = tiempoFinal - tiempoActual;
 
-        if (tiempoRestante <= 0) {
+        if (diferencia <= 0) {
             clearInterval(cuentaAtrasInterval);
+            cuentaAtrasElemento.textContent = '00:00:00';
             reproducirAlarma();
             return;
         }
 
-        const horas = String(Math.floor(tiempoRestante / 3600000)).padStart(2, '0');
-        const minutos = String(Math.floor((tiempoRestante % 3600000) / 60000)).padStart(2, '0');
-        const segundos = String(Math.floor((tiempoRestante % 60000) / 1000)).padStart(2, '0');
-        cuentaAtrasElemento.textContent = `${horas}:${minutos}:${segundos}`;
+        actualizarTiempoRestante(diferencia);
     }, 1000);
 }
 
+// ACTUALIZAR TIEMPO RESTANTE
+function actualizarTiempoRestante(ms) {
+    const horas = String(Math.floor(ms / 3600000)).padStart(2, '0');
+    const minutos = String(Math.floor((ms % 3600000) / 60000)).padStart(2, '0');
+    const segundos = String(Math.floor((ms % 60000) / 1000)).padStart(2, '0');
+    cuentaAtrasElemento.textContent = `${horas}:${minutos}:${segundos}`;
+}
+
+// CUENTA ATRÁS DESDE HORA EXACTA
+function calcularCuentaAtrasDesdeHora() {
+    const [hora, minuto] = horaAlarma.split(':');
+    const ahora = new Date();
+    const alarmaTime = new Date();
+    alarmaTime.setHours(hora, minuto, 0, 0);
+
+    if (alarmaTime < ahora) alarmaTime.setDate(alarmaTime.getDate() + 1);
+
+    tiempoRestanteMs = alarmaTime - ahora;
+    iniciarCuentaAtras();
+}
+
+// REPRODUCIR ALARMA Y MOSTRAR MODAL
 function reproducirAlarma() {
     const audio = new Audio(`sounds/${sonidoAlarma}`);
     audio.play();
-    alert(`⏰ ¡Es hora de la alarma! ${tituloAlarma || ''}`);
-    resetearAlarma();
+
+    // MOSTRAR MODAL DE ALARMA
+    document.getElementById('modal-alarma-hora').textContent = obtenerHoraActual();
+    document.getElementById('modal-alarma-titulo').textContent = tituloAlarma || '¡Alarma!';
+    modalAlarma.classList.remove('hidden');
 }
 
+// OBTENER HORA ACTUAL FORMATEADA
+function obtenerHoraActual() {
+    const ahora = new Date();
+    return ahora.toLocaleTimeString();
+}
+
+// CERRAR MODAL DE ALARMA
+document.getElementById('cerrar-alarma').addEventListener('click', () => {
+    modalAlarma.classList.add('hidden');
+    resetearAlarma();
+});
+
+// DESACTIVAR ALARMA
 desactivarBoton.addEventListener('click', resetearAlarma);
 
 function resetearAlarma() {
-    horaAlarma = null;
-    tituloAlarma = null;
-    sonidoAlarma = null;
-
     clearInterval(cuentaAtrasInterval);
     cuentaAtrasElemento.textContent = '--:--:--';
     horaAlarmaElemento.textContent = '--:--';
-    document.querySelector('.alarma h2').textContent = 'Alarma';
+    tituloAlarmaElemento.textContent = 'Alarma';
 
     alarmaInfo.classList.add('hidden');
     habilitarBoton.classList.remove('hidden');
     desactivarBoton.classList.add('hidden');
-}
-
-// Evento para cerrar el modal al hacer clic en "Cancelar"
-cancelarBoton.addEventListener('click', () => {
-    modal.classList.add('hidden'); // Oculta el modal
-    limpiarFormularioAlarma(); // Limpia los campos del modal (opcional)
-});
-
-// Función opcional para limpiar los campos del modal
-function limpiarFormularioAlarma() {
-    document.getElementById('hora-input').value = '';
-    document.getElementById('titulo-input').value = '';
-    document.getElementById('sonido-input').value = 'alarma.mp3'; // Restablece el sonido por defecto
+    tiempoInput.disabled = false;
+    horaInput.disabled = false;
 }

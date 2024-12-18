@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reloj Digital y Alarma</title>
+    <link href="https://fonts.cdnfonts.com/css/ds-digital" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Botón para cambiar el fondo -->
+    <button id="toggle-theme" class="theme-button">🌙</button>
+
+    <!-- Reloj Digital -->
+    <div class="container">
+        <div id="reloj-digital">
+            <h1 id="hora">00:00:00</h1>
+            <p id="fecha">Lunes, 16 de diciembre de 2024</p>
+        </div>
+
+        <!-- Sección Alarma -->
+        <div class="alarma">
+            <h2 id="alarma-titulo">Alarma</h2>
+            <button id="habilitar" class="boton">Habilitar Alarma</button>
+            <div id="alarma-info" class="hidden">
+                <p><strong>Hora Programada:</strong> <span id="hora-alarma">--:--</span></p>
+                <p><strong>Cuenta Atrás:</strong> <span id="cuenta-atras">--:--:--</span></p>
+                <button id="desactivar" class="boton-rojo hidden">Desactivar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para configurar la alarma -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">Editar Alarma</div>
+
+            <!-- Modal Inputs -->
+            <div class="modal-row">
+                <label>Hora (HH:MM):</label>
+                <input id="hora-input" type="time" />
+            </div>
+
+            <div class="modal-row">
+                <label>Cuenta Atrás (HH:MM:SS):</label>
+                <input id="tiempo-input" type="text" placeholder="hh:mm:ss" />
+            </div>
+
+            <div class="modal-row">
+                <label>Título:</label>
+                <input id="titulo-input" type="text" placeholder="Título de la alarma" />
+            </div>
+
+            <div class="modal-row">
+                <label>Sonido:</label>
+                <select id="sonido-input">
+                    <option value="darius.mp3">darius</option>
+                    <option value="chinese.mp3">chinese</option>
+                    <option value="puestada.mp3">puestada</option>
+                </select>
+            </div>
+
+            <div class="modal-buttons">
+                <button id="cancelar" class="btn btn-cancel">Cancelar</button>
+                <button id="guardar-alarma" class="btn">Guardar</button>
+            </div>
+        </div>
+    </div>
+    <div id="modal-alarma" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="modal-alarma-titulo">¡Alarma!</h2>
+            <p>La hora actual es: <span id="modal-alarma-hora"></span></p>
+            <button id="cerrar-alarma" class="btn">Cerrar</button>
+        </div>
+    </div>
+    
+    <script src="scripts/reloj.js"></script>
+    <script src="scripts/alarma.js"></script>
+    <script src="scripts/theme.js"></script>
+</body>
+</html>
