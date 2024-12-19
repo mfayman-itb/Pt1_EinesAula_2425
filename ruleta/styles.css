@@ -8,12 +8,22 @@ body {
 }
 
 .container {
+  position: relative;  /* Necesario para posicionar las monedas dentro del contenedor */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  margin-top: 0; /* Reducir el margen superior */
+  margin-top: 0;
+}
+
+.coin {
+  position: absolute;
+  background-color: #FFD700;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;  /* Las monedas no deben interferir con otros elementos */
 }
 
 h1 {
@@ -60,4 +70,25 @@ body.light-theme .theme-button {
 body.light-theme .modal-content {
   background: #f4f4f4;
   color: #000000;
+}
+
+/* Contenedor de la ruleta y la flecha */
+.wheel-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Flecha */
+.arrow {
+  position: absolute;
+  top: 45%; /* Centrada verticalmente */
+  left: 100%; /* Centrada horizontalmente */
+  transform: translate(-50%, -100%); /* Ajustar posición al borde superior de la ruleta */
+  transform: rotate(-90deg);
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 30px solid red; /* Triángulo rojo */
+  z-index: 10;
 }

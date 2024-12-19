@@ -8,10 +8,13 @@
 </head>
 <body>
     <button id="toggle-theme" class="theme-button">🌙</button>
-
+    <audio id="spin-sound" src="spin.mp3" preload="auto"></audio>
     <div class="container">
         <h1>Ruleta de Nombres</h1>
-        <canvas id="wheel" width="500" height="500"></canvas>
+        <div class="wheel-container">
+            <canvas id="wheel" width="500" height="500"></canvas>
+            <div class="arrow"></div> <!-- Flecha fuera del canvas -->
+        </div>
         <button id="spin-btn">Girar</button>
         <div id="winner"></div>
     </div>

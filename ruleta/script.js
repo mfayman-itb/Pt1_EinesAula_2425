@@ -1,13 +1,16 @@
+// Seleccionar el elemento de audio
+const spinSound = document.getElementById('spin-sound');
+
 // Ajustar el centro de la ruleta para que quede centrada en el canvas
 const canvas = document.getElementById('wheel');
 const ctx = canvas.getContext('2d');
 const spinButton = document.getElementById('spin-btn');
 const winnerDiv = document.getElementById('winner');
 
-let names = []; // Lista de nombres desde el archivo
+let names = [];
 let startAngle = 0;
-let arc = 0; // Ángulo de cada sección (se calculará dinámicamente)
-const colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#FFC300', '#DAF7A6', '#900C3F', '#581845'];
+let arc = 0;
+const colors = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#00FFFF', '#0000FF', '#8A2BE2', '#FF00FF', '#FFD700', '#FF1493', '#00FA9A', '#1E90FF', '#FF4500', '#7FFF00', '#9400D3', '#EE82EE', '#4B0082'];
 
 let spinAngle = 0;
 let spinTime = 0;
@@ -21,12 +24,12 @@ async function loadNames() {
     names = text.split('\n').filter(name => name.trim() !== '');
     
     // Calcular el ángulo por sección según el número de nombres
-    arc = Math.PI * 2 / names.length; // Ángulo para cada sección (360 grados / número de nombres)
+    arc = Math.PI * 2 / names.length; 
 
     drawWheel();
 }
 
-// Dibujar la ruleta (centrada en el canvas)
+// Dibujar la ruleta
 function drawWheel() {
     const centerX = canvas.width / 2;  // Centro del canvas
     const centerY = canvas.height / 2; // Centro del canvas
@@ -44,15 +47,14 @@ function drawWheel() {
         ctx.fill();
         ctx.save();
 
-        // Configurar el estilo del texto
-        ctx.fillStyle = "white";
-        ctx.font = "20px Arial";  // Tamaño de la fuente
+        ctx.fillStyle = "black";
+        ctx.font = "20px Arial";
 
         // Calcular el ángulo central para cada nombre
-        const textAngle = angle + arc / 2; // Ángulo central del segmento
+        const textAngle = angle + arc / 2; 
 
         // Posición en el borde exterior de la ruleta (en el radio adecuado)
-        const x = centerX + Math.cos(textAngle) * 180; // Ajusta el radio si es necesario
+        const x = centerX + Math.cos(textAngle) * 180;
         const y = centerY + Math.sin(textAngle) * 180;
 
         // Posicionamos el texto
@@ -69,49 +71,27 @@ function drawWheel() {
         ctx.fillText(names[i], -ctx.measureText(names[i]).width / 2, 0);
         ctx.restore();
     }
-
-    // Dibujar la flecha que indica el ganador
-    drawArrow(centerX, centerY);
 }
 
-// Función para dibujar una flecha tradicional que apunte al ganador
-function drawArrow(centerX, centerY) {
-  ctx.save();
-  ctx.translate(centerX + 250, centerY);  // Posiciona la flecha a la derecha de la ruleta
-  ctx.rotate(Math.PI / 2);   // Rota la flecha para que apunte hacia la ruleta
-
-  // Cuerpo de la flecha (línea recta)
-  ctx.beginPath();
-  ctx.moveTo(0, -10);    // Parte inferior del cuerpo de la flecha
-  ctx.lineTo(60, 0);     // Línea recta hacia la punta
-  ctx.lineTo(0, 10);     // Parte superior del cuerpo de la flecha
-  ctx.closePath();
-  ctx.fillStyle = "#FF0000"; // Color rojo
-  ctx.fill();
-
-  // Punta de la flecha (triángulo)
-  ctx.beginPath();
-  ctx.moveTo(60, 0);      // Base de la punta de la flecha
-  ctx.lineTo(80, 10);     // Punta hacia la derecha
-  ctx.lineTo(80, -10);    // Punta hacia la izquierda
-  ctx.closePath();
-  ctx.fillStyle = "#FF0000"; // Color rojo
-  ctx.fill();
-
-  ctx.restore();
-}
 // Control del botón
 spinButton.addEventListener('click', () => {
     if (isSpinning) return; // Evita múltiples giros simultáneos
     isSpinning = true;
     spinTime = 0;
     spinTimeTotal = Math.random() * 3000 + 4000; // Tiempo de giro aleatorio (3-7 segundos)
+    startSpinSound();
     rotateWheel();
 });
 
+// Función para iniciar el sonido cuando comienza a girar
+function startSpinSound() {
+    spinSound.currentTime = 0; // Reiniciar el sonido
+    spinSound.play(); // Reproducir el sonido
+}
+
 // Función para girar la ruleta con animación fluida
 function rotateWheel() {
-    spinTime += 20; // Control del tiempo de giro
+    spinTime += 20;
     if (spinTime >= spinTimeTotal) {
         stopRotateWheel();
         return;
@@ -132,7 +112,10 @@ function stopRotateWheel() {
     const degrees = (startAngle * 180 / Math.PI) % 360;
     const index = Math.floor((360 - degrees) / (360 / names.length)) % names.length;
     winnerDiv.textContent = `Ganador: ${names[index]}`;
+    
+    // Detener el sonido cuando la ruleta se detiene
+    spinSound.pause();
+    spinSound.currentTime = 0; // Reiniciar el sonido
 }
 
-// Inicializar
 loadNames();
