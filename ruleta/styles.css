@@ -27,8 +27,8 @@ body {
 }
 
 h1 {
-  font-size: 3rem; /* Reducir el tamaño del título */
-  margin-bottom: 10px; /* Reducir el espacio entre el título y el botón */
+  font-size: 40px; /* Reducir el tamaño del título */
+  margin-bottom: 80px; /* Reducir el espacio entre el título y el botón */
 }
 
 body.light-theme {
@@ -52,8 +52,8 @@ body.light-theme .modal-content {
 
 /* Contenedor de ganador */
 #winner {
-  font-size: 2rem;
-  color: #fff;
+  font-size: 30px;
+  color: #ff8800;
   margin-top: 20px; /* Añadir espacio entre el resultado y la ruleta */
 }
 
