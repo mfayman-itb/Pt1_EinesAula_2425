@@ -102,14 +102,14 @@ body.light-theme .modal-content {
 }
 
 .modal-content {
-    background: #333; /* Fondo oscuro neutro */
+    background: #333;
     padding: 30px;
     border-radius: 10px;
     color: #fff;
     text-align: left;
-    width: 400px; /* Ancho fijo */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra sutil */
-    font-family: 'Arial', sans-serif; /* Fuente neutral */
+    width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    font-family: 'Arial', sans-serif;
 }
 
 .modal-header {
@@ -125,7 +125,7 @@ body.light-theme .modal-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px; /* Espacio entre filas */
+    margin-bottom: 15px;
 }
 
 .modal-label {

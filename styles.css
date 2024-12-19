@@ -21,16 +21,16 @@ p, h2 {
 
 /* Estilo para los links */
 a {
-    color: #ff8800; /* Color naranja */
+    color: #ff8800;
     font-size: 2rem;
-    text-decoration: underline; /* Subrayado */
+    text-decoration: underline;
     padding: 10px 20px;
     margin: 0 20px;
     transition: color 0.3s ease;
 }
 
 a:hover {
-    color: #e67e22; /* Color naranja más oscuro al pasar el ratón */
+    color: #e67e22;
 }
 
 /* Centrar los links en la página */
@@ -38,12 +38,12 @@ a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Centra verticalmente */
+    height: 100vh;
     margin-top: 10px;
 }
 
 .links-container a {
-    margin: 0 20px; /* Espacio entre los links */
+    margin: 0 20px;
 }
 
 /* Tema Claro */

@@ -3,8 +3,8 @@ document.getElementById('toggle-theme').addEventListener('click', () => {
 
     const boton = document.getElementById('toggle-theme');
     if (document.body.classList.contains('light-theme')) {
-        boton.textContent = '☀️'; // Sol para el tema claro
+        boton.textContent = '☀️';
     } else {
-        boton.textContent = '🌙'; // Luna para el tema oscuro
+        boton.textContent = '🌙';
     }
 });
